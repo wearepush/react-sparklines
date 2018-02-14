@@ -1545,7 +1545,7 @@ var SparklinesLine = function (_React$Component) {
       };
 
       var renderTooltips = function renderTooltips() {
-        if (!disableTooltips) return null;
+        if (disableTooltips) return null;
 
         return points.map(function (p, i) {
           return _react2.default.createElement('circle', {

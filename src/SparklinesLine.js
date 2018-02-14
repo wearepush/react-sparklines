@@ -44,7 +44,7 @@ export default class SparklinesLine extends React.Component {
     };
 
     const renderTooltips = () => {
-      if (!disableTooltips) return null;
+      if (disableTooltips) return null;
 
       return (
         points.map((p, i) => {
