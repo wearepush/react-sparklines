@@ -13,7 +13,7 @@ export default class SparklinesLine extends React.Component {
   };
 
   render() {
-    const { data, points, width, height, margin, color, style, onMouseMove } = this.props;
+    const { data, points, width, height, margin, color, style, onMouseMove, disableTooltips } = this.props;
 
     const linePoints = points.map(p => [p.x, p.y]).reduce((a, b) => a.concat(b));
 
@@ -43,23 +43,29 @@ export default class SparklinesLine extends React.Component {
       pointerEvents: 'auto',
     };
 
-    const tooltips = points.map((p, i) => {
+    const renderTooltips = () => {
+      if (!disableTooltips) return null;
+
       return (
-        <circle
-          key={i}
-          cx={p.x}
-          cy={p.y}
-          r={2}
-          style={fillStyle}
-          onMouseEnter={e => onMouseMove('enter', data[i], p)}
-          onClick={e => onMouseMove('click', data[i], p)}
-        />
+        points.map((p, i) => {
+          return (
+            <circle
+              key={i}
+              cx={p.x}
+              cy={p.y}
+              r={2}
+              style={fillStyle}
+              onMouseEnter={e => onMouseMove('enter', data[i], p)}
+              onClick={e => onMouseMove('click', data[i], p)}
+            />
+          );
+        })
       );
-    });
+    };
 
     return (
       <g>
-        {tooltips}
+        {renderTooltips()}
         <polyline points={fillPoints.join(' ')} style={fillStyle} />
         <polyline points={linePoints.join(' ')} style={lineStyle} />
       </g>

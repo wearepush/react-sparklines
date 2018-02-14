@@ -10,7 +10,6 @@ import SparklinesNormalBand from './SparklinesNormalBand';
 import dataToPoints from './dataProcessing/dataToPoints';
 
 class Sparklines extends PureComponent {
-
     static propTypes = {
         data: PropTypes.array,
         limit: PropTypes.number,
@@ -23,7 +22,8 @@ class Sparklines extends PureComponent {
         style: PropTypes.object,
         min: PropTypes.number,
         max: PropTypes.number,
-        onMouseMove: PropTypes.func
+        onMouseMove: PropTypes.func,
+        disableTooltips: PropTypes.bool
     };
 
     static defaultProps = {
@@ -40,7 +40,7 @@ class Sparklines extends PureComponent {
     }
 
     render() {
-        const {  data, limit, width, height, svgWidth, svgHeight, preserveAspectRatio, margin, style, max, min} = this.props;
+        const { data, limit, width, height, svgWidth, svgHeight, preserveAspectRatio, margin, style, max, min, disableTooltips } = this.props;
 
         if (data.length === 0) return null;
 
@@ -54,7 +54,7 @@ class Sparklines extends PureComponent {
             <svg {...svgOpts}>
                 {
                     React.Children.map(this.props.children, function(child) {
-                        return React.cloneElement(child, { data, points, width, height, margin });
+                        return React.cloneElement(child, { data, points, width, height, margin, disableTooltips });
                     })
                 }
             </svg>
